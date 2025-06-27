@@ -2,6 +2,11 @@
 
 A comprehensive Django-based Employee Management System with REST API, PostgreSQL database, and interactive dashboard with data visualization.
 
+## 🌐 Live Demo
+**Live Application**: https://managesystem.onrender.com/
+
+![Employee Management System Demo](demo.png)
+
 ## Features
 
 ### Core Functionality
@@ -118,6 +123,7 @@ Managesystem/
 ## API Endpoints
 
 ### Base URL
+- **Production**: https://managesystem.onrender.com/api/v1/
 - Local: `http://localhost:8000/api/v1/`
 - Docker: `http://localhost:8000/api/v1/`
 
