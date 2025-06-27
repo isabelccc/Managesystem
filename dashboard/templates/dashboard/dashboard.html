@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Dashboard</title>
+    <title>Employer Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -11,7 +12,7 @@
             background: #f6f7fb;
         }
         .sidebar {
-            background: linear-gradient(180deg, #7b2ff2 0%, #f357a8 100%);
+            background: #2d3fa3;
             min-height: 100vh;
             color: #fff;
             padding: 0;
@@ -29,37 +30,47 @@
         .sidebar .nav-link {
             color: #fff;
             font-weight: 500;
-            padding: 16px 24px;
-            border-radius: 8px 0 0 8px;
+            padding: 14px 24px;
+            border-radius: 8px;
             margin-bottom: 4px;
-            transition: background 0.2s;
+            transition: background 0.2s, color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         .sidebar .nav-link.active, .sidebar .nav-link:hover {
-            background: rgba(255,255,255,0.15);
-            color: #fff;
+            background: #fff;
+            color: #2d3fa3;
+            box-shadow: 0 2px 8px rgba(45,63,163,0.08);
+        }
+        .sidebar .nav-link .icon {
+            font-size: 1.2rem;
+            width: 24px;
+            text-align: center;
         }
         .main-content {
             padding: 40px 40px 0 40px;
         }
         .dashboard-header {
-            background: linear-gradient(90deg, #7b2ff2 0%, #f357a8 100%);
+            background: #2d3fa3;
             color: #fff;
-            border-radius: 18px;
-            padding: 32px 32px 24px 32px;
+            border-radius: 14px;
+            padding: 24px 32px 18px 32px;
             margin-bottom: 32px;
-            box-shadow: 0 4px 24px rgba(123,47,242,0.08);
+            box-shadow: 0 4px 24px rgba(45,63,163,0.08);
         }
         .stat-card {
             background: #fff;
-            border-radius: 16px;
-            box-shadow: 0 2px 8px rgba(123,47,242,0.06);
-            padding: 24px 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(45,63,163,0.06);
+            padding: 20px 16px;
             margin-bottom: 24px;
             text-align: center;
         }
         .stat-card .icon {
             font-size: 2rem;
             margin-bottom: 8px;
+            color: #2d3fa3;
         }
         .stat-card .stat-label {
             color: #888;
@@ -68,19 +79,24 @@
         .stat-card .stat-value {
             font-size: 2rem;
             font-weight: 700;
+            color: #2d3fa3;
+        }
+        .stat-card .stat-sub {
+            color: #4bc0c0;
+            font-size: 0.95rem;
         }
         .chart-card {
             background: #fff;
-            border-radius: 16px;
-            box-shadow: 0 2px 8px rgba(123,47,242,0.06);
-            padding: 24px 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(45,63,163,0.06);
+            padding: 20px 16px;
             margin-bottom: 24px;
         }
         .top-employees {
             background: #fff;
-            border-radius: 16px;
-            box-shadow: 0 2px 8px rgba(123,47,242,0.06);
-            padding: 24px 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(45,63,163,0.06);
+            padding: 20px 16px;
             margin-bottom: 24px;
         }
         .top-employee {
@@ -96,15 +112,16 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: #eee;
+            background: #e3e8fa;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
             font-size: 1.2rem;
+            color: #2d3fa3;
         }
         .add-task-btn {
-            background: linear-gradient(90deg, #7b2ff2 0%, #f357a8 100%);
+            background: #2d3fa3;
             color: #fff;
             border: none;
             border-radius: 8px;
@@ -123,17 +140,19 @@
         <!-- Sidebar -->
         <nav class="col-lg-2 col-md-3 d-none d-md-block sidebar">
             <div class="logo">
-                <img src="/static/springer.png" alt="Logo">
-                <span style="font-size:1.3rem;font-weight:700;letter-spacing:1px;">Springer Captial</span>
+                <img src="{% static 'springer.png' %}" alt="Logo">
+                <span style="font-size:1.3rem;font-weight:700;letter-spacing:1px;">Springer Capital</span>
             </div>
             <ul class="nav flex-column">
-                <li class="nav-item"><a class="nav-link active" href="#"><span>🏠</span> Overview</a></li>
-                <li class="nav-item"><a class="nav-link" href="#"><span>⏳</span> Attendance</a></li>
-                <li class="nav-item"><a class="nav-link" href="#"><span>📊</span> Dashboard</a></li>
-                <li class="nav-item"><a class="nav-link" href="#"><span>👥</span> Users</a></li>
-                <li class="nav-item"><a class="nav-link" href="#"><span>📋</span> Activity</a></li>
-                <li class="nav-item"><a class="nav-link" href="#"><span>💬</span> Messages</a></li>
-                <li class="nav-item"><a class="nav-link" href="#"><span>⚙️</span> Settings</a></li>
+                <li class="nav-item"><a class="nav-link active" href="/dashboard/"><span class="icon">🏠</span> Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="/dashboard/attendance/"><span class="icon">⏳</span> Attendance</a></li>
+                <li class="nav-item"><a class="nav-link" href="#"><span class="icon">💰</span> Salary</a></li>
+                <li class="nav-item"><a class="nav-link" href="#"><span class="icon">📝</span> Loan Application</a></li>
+                <li class="nav-item"><a class="nav-link" href="#"><span class="icon">📊</span> Report</a></li>
+                <li class="nav-item"><a class="nav-link" href="#"><span class="icon">📋</span> Task</a></li>
+                <li class="nav-item"><a class="nav-link" href="#"><span class="icon">⚠️</span> Penalty</a></li>
+                <li class="nav-item"><a class="nav-link" href="#"><span class="icon">📢</span> Notice Board</a></li>
+                <li class="nav-item"><a class="nav-link" href="#"><span class="icon">💬</span> Chat</a></li>
             </ul>
         </nav>
         <!-- Main Content -->
@@ -141,114 +160,98 @@
             <div class="dashboard-header d-flex justify-content-between align-items-center">
                 <div>
                     <h2 style="font-weight:800;letter-spacing:1px;">Employee Dashboard</h2>
-                    <div style="font-size:1.1rem;opacity:0.85;">Available on Dark and Light Mode</div>
+                    <div style="font-size:1.1rem;opacity:0.85;">Welcome to the management system</div>
                 </div>
-                <button class="add-task-btn">Add Task</button>
+                <button class="add-task-btn">Break In</button>
+            </div>
+            <!-- Attendance Details Chart (full width) -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="chart-card" style="padding: 24px 32px;">
+                        <h5 style="font-weight:700;">Attendance Details</h5>
+                        <canvas id="attendanceDetailsChart" height="80"></canvas>
+                    </div>
+                </div>
             </div>
             <!-- Stat Cards -->
             <div class="row g-3 mb-4">
-                <div class="col-md-3 col-6">
+                <div class="col-md-4 col-12">
                     <div class="stat-card">
-                        <div class="icon">👥</div>
-                        <div class="stat-label">Total Employees</div>
-                        <div class="stat-value" id="total-employees">-</div>
-                        <div style="color:#4bc0c0;font-size:0.95rem;">+35% This Month</div>
+                        <div class="icon">👤</div>
+                        <div class="stat-label">Total attendance</div>
+                        <div class="stat-value" id="total-attendance">-</div>
+                        <div class="stat-sub">This month's attendance</div>
                     </div>
                 </div>
-                <div class="col-md-3 col-6">
+                <div class="col-md-4 col-12">
                     <div class="stat-card">
-                        <div class="icon">📋</div>
-                        <div class="stat-label">Total Tasks</div>
-                        <div class="stat-value">2,3016</div>
-                        <div style="color:#4bc0c0;font-size:0.95rem;">+35% This Month</div>
+                        <div class="icon">🏖️</div>
+                        <div class="stat-label">Holiday this year</div>
+                        <div class="stat-value">65</div>
+                        <div class="stat-sub">3 holiday this month</div>
                     </div>
                 </div>
-                <div class="col-md-3 col-6">
+                <div class="col-md-4 col-12">
                     <div class="stat-card">
-                        <div class="icon">✅</div>
-                        <div class="stat-label">Completed Task</div>
-                        <div class="stat-value">2,3016</div>
-                        <div style="color:#4bc0c0;font-size:0.95rem;">+35% This Month</div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-6">
-                    <div class="stat-card">
-                        <div class="icon">❌</div>
-                        <div class="stat-label">Incompleted Task</div>
-                        <div class="stat-value">2,3016</div>
-                        <div style="color:#4bc0c0;font-size:0.95rem;">+35% This Month</div>
+                        <div class="icon">🧑‍💼</div>
+                        <div class="stat-label">Leave this year</div>
+                        <div class="stat-value">45</div>
+                        <div class="stat-sub">10 leave accepted <a href="#" style="color:#2d3fa3;text-decoration:underline;">Apply for Leave</a></div>
                     </div>
                 </div>
             </div>
+           
             <!-- Charts and Top Employees -->
-            <div class="row g-3 mb-4">
-                <div class="col-lg-6">
-                    <div class="chart-card">
-                        <h5>Task Target Actual vs Prediction</h5>
-                        <canvas id="gaugeChart" height="120"></canvas>
-                        <div class="text-center mt-2" style="font-size:1.5rem;font-weight:700;">10,468 <span style="font-size:1rem;font-weight:400;">Tasks</span></div>
+            <div class="row g-3 mb-4 align-items-stretch">
+                <div class="col-lg-8 d-flex">
+                    <div class="chart-card w-100">
+                        <h5>Employee Activity</h5>
+                        <canvas id="activityChart" height="120"></canvas>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <div class="top-employees">
-                        <h5>Top Employees</h5>
-                        <div class="top-employee"><div class="avatar" style="background:#fbc02d;">R</div> <div><b>Rudolph G</b><br><span style="font-size:0.9rem;color:#888;">Product Designer</span></div> <div class="ms-auto text-success">1,230 pts</div></div>
-                        <div class="top-employee"><div class="avatar" style="background:#4bc0c0;">A</div> <div><b>Anna F</b><br><span style="font-size:0.9rem;color:#888;">Frontend Engineer</span></div> <div class="ms-auto text-success">1,140 pts</div></div>
-                        <div class="top-employee"><div class="avatar" style="background:#7b2ff2;">M</div> <div><b>Marco D.G</b><br><span style="font-size:0.9rem;color:#888;">Social Media</span></div> <div class="ms-auto text-success">1,084 pts</div></div>
-                        <div class="top-employee"><div class="avatar" style="background:#f357a8;">R</div> <div><b>Robert X</b><br><span style="font-size:0.9rem;color:#888;">Growth</span></div> <div class="ms-auto text-success">1,001 pts</div></div>
+                <div class="col-lg-4 d-flex">
+                    <div class="chart-card w-100">
+                        <h6>Complete Task Target</h6>
+                        <canvas id="pieChart" width="100" height="100"></canvas>
+                        <div class="text-center mt-2">78% Task</div>
                     </div>
                 </div>
             </div>
-            <!-- More Charts -->
-            <div class="row g-3 mb-4">
-                <div class="col-lg-4">
-                    <div class="chart-card">
-                        <h6>Complete Task Target</h6>
-                        <canvas id="pieChart" height="180"></canvas>
-                        <div class="text-center mt-2">Completed Task <b>455</b></div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="chart-card">
-                        <h6>Task Count</h6>
-                        <canvas id="barChart" height="180"></canvas>
-                        <div class="text-center mt-2">Expansion Europe <b>245</b> | Payment Promo <b>122</b></div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="chart-card">
-                        <h6>Monthly Attendance Overview</h6>
-                        <canvas id="attendanceChart" height="180"></canvas>
-                    </div>
-                </div>
             </div>
         </main>
     </div>
 </div>
 <script>
-    // Fetch and update real employee count
+    // Fetch and update real attendance count
     fetch('/dashboard/api/stats/')
         .then(response => response.json())
         .then(data => {
-            document.getElementById('total-employees').textContent = data.overall.total_employees;
+            document.getElementById('total-attendance').textContent = data.today_attendance.present;
         });
 
-    // Gauge Chart (Task Target Actual vs Prediction)
-    new Chart(document.getElementById('gaugeChart'), {
-        type: 'doughnut',
+    // Employee Activity Chart (demo data)
+    new Chart(document.getElementById('activityChart'), {
+        type: 'bar',
         data: {
-            labels: ['Actual', 'Prediction'],
-            datasets: [{
-                data: [10468, 12000-10468],
-                backgroundColor: ['#7b2ff2', '#eee'],
-                borderWidth: 0
-            }]
+            labels: ['09 am', '10 am', '11 am', '12 pm', '01 pm', '02 pm', '03 pm', '04 pm', '05 pm'],
+            datasets: [
+                {
+                    label: 'Today',
+                    data: [30, 45, 38, 25, 10, 20, 35, 55, 50],
+                    backgroundColor: '#2d3fa3',
+                    borderRadius: 8
+                },
+                {
+                    label: 'Yesterday',
+                    data: [40, 60, 45, 30, 5, 15, 30, 60, 48],
+                    backgroundColor: '#e3e8fa',
+                    borderRadius: 8
+                }
+            ]
         },
         options: {
-            cutout: '80%',
-            plugins: { legend: { display: false } },
-            circumference: 180,
-            rotation: 270
+            plugins: { legend: { position: 'top' } },
+            scales: { y: { beginAtZero: true } }
         }
     });
     // Pie Chart (Complete Task Target)
@@ -257,8 +260,8 @@
         data: {
             labels: ['Completed', 'Remaining'],
             datasets: [{
-                data: [82, 18],
-                backgroundColor: ['#4bc0c0', '#eee'],
+                data: [78, 22],
+                backgroundColor: ['#2d3fa3', '#e3e8fa'],
                 borderWidth: 0
             }]
         },
@@ -267,44 +270,72 @@
             plugins: { legend: { display: false } }
         }
     });
-    // Bar Chart (Task Count)
-    new Chart(document.getElementById('barChart'), {
-        type: 'bar',
+    // Attendance Details Chart (styled, full width)
+    new Chart(document.getElementById('attendanceDetailsChart'), {
+        type: 'line',
         data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-            datasets: [
-                {
-                    label: 'Expansion Europe',
-                    data: [120, 135, 180, 210, 245],
-                    backgroundColor: '#7b2ff2',
-                    borderRadius: 8
-                },
-                {
-                    label: 'Payment Promo',
-                    data: [60, 80, 90, 100, 122],
-                    backgroundColor: '#f357a8',
-                    borderRadius: 8
-                }
-            ]
+            labels: ['08:00 am', '08:30 am', '09:00 am', '09:30 am', '10:00 am', '10:30 am'],
+            datasets: [{
+                label: 'Attendance',
+                data: [10, 12, 15, 14, 16, 15],
+                borderColor: '#2d3fa3',
+                backgroundColor: 'rgba(45,63,163,0.08)',
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#2d3fa3',
+                pointBorderColor: '#fff',
+                pointRadius: 4,
+                pointHoverRadius: 6
+            }]
         },
         options: {
-            plugins: { legend: { position: 'bottom' } },
+            plugins: { legend: { display: false } },
             scales: {
-                x: { stacked: true },
-                y: { stacked: true, beginAtZero: true }
+                x: {
+                    ticks: { color: '#444', font: { size: 13, weight: 'bold' }, maxRotation: 30, minRotation: 30 },
+                    grid: { display: false }
+                },
+                y: {
+                    beginAtZero: true,
+                    ticks: { color: '#888', font: { size: 13 } },
+                    grid: { color: '#e3e8fa' }
+                }
             }
         }
     });
-    // Attendance Chart (real data)
+    // Monthly Attendance Overview Chart (full width)
     fetch('/dashboard/api/attendance-chart/')
         .then(response => response.json())
         .then(data => {
-            new Chart(document.getElementById('attendanceChart'), {
+            new Chart(document.getElementById('attendanceOverviewChart'), {
                 type: 'bar',
                 data: data,
                 options: {
-                    plugins: { legend: { position: 'top' } },
-                    scales: { y: { beginAtZero: true } }
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                            labels: {
+                                font: { size: 16, weight: 'bold' },
+                                usePointStyle: true,
+                                padding: 20
+                            }
+                        },
+                        title: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: { color: '#444', font: { size: 13, weight: 'bold' }, maxRotation: 40, minRotation: 40 },
+                            grid: { display: false }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            ticks: { color: '#888', font: { size: 13 } },
+                            grid: { color: '#e3e8fa' }
+                        }
+                    }
                 }
             });
         });

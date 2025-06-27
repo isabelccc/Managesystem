@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -73,7 +74,7 @@
         <nav class="col-lg-2 col-md-3 d-none d-md-block sidebar">
             <div class="logo">
                 <img src="/static/springer.png" alt="Logo">
-                <span style="font-size:1.3rem;font-weight:700;letter-spacing:1px;">Baligo</span>
+                <span style="font-size:1.3rem;font-weight:700;letter-spacing:1px;">Springer Capital</span>
             </div>
             <ul class="nav flex-column">
                 <li class="nav-item"><a class="nav-link" href="/dashboard/"><span>🏠</span> Dashboard</a></li>
@@ -89,31 +90,10 @@
                 </div>
             </div>
             <div class="row g-3 mb-4">
-                <div class="col-lg-6">
-                    <div class="chart-card">
-                        <h5>Monthly Attendance Overview</h5>
+                <div class="col-12">
+                    <div class="chart-card" style="padding: 24px 32px;">
+                        <h5 style="font-weight:700;">Monthly Attendance Overview</h5>
                         <canvas id="attendanceChart" height="180"></canvas>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="attendance-table">
-                        <h5>Recent Attendance Records</h5>
-                        <div class="table-responsive">
-                            <table class="table table-sm align-middle mb-0">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Date</th>
-                                        <th>Status</th>
-                                        <th>Check-in</th>
-                                        <th>Check-out</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="attendance-table-body">
-                                    <tr><td colspan="5" class="text-center">Loading...</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
                     </div>
                 </div>
             </div>

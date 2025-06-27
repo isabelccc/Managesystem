@@ -243,6 +243,32 @@ python manage.py seed_data
 python manage.py seed_data --employees 100
 ```
 
+## Running Tests
+
+This project includes unit tests for all major API endpoints (Employees, Departments, Attendance, Performance).
+
+### How to Run Tests
+
+1. **Ensure your PostgreSQL user has CREATEDB privilege**
+   - Django needs to create a test database. If you see a `permission denied to create database` error, grant your user the privilege:
+   ```sql
+   ALTER USER postgres CREATEDB;
+   ```
+   Replace `postgres` with your actual DB username if different (see your `.env` or `env.example`).
+
+2. **Run the tests:**
+   ```bash
+   python manage.py test
+   ```
+
+3. **What is tested?**
+   - Basic CRUD and list API endpoints for Employees, Departments, Attendance, and Performance.
+   - Tests are located in `employees/tests.py`, `attendance/tests.py`, and `performance/tests.py`.
+
+4. **Troubleshooting**
+   - If you get a database permission error, make sure your DB user has the `CREATEDB` privilege.
+   - If you get connection errors, check your `.env` database settings.
+
 ## Database Models
 
 ### Department
