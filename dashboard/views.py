@@ -192,3 +192,8 @@ def dashboard_stats(request):
     }
     
     return JsonResponse(stats)
+
+
+def attendance_overview(request):
+    """Attendance overview page"""
+    return render(request, 'dashboard/attendance_overview.html')

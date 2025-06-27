@@ -7,4 +7,5 @@ urlpatterns = [
     path('api/attendance-chart/', views.attendance_chart_data, name='attendance_chart_data'),
     path('api/performance-chart/', views.performance_chart_data, name='performance_chart_data'),
     path('api/stats/', views.dashboard_stats, name='dashboard_stats'),
+    path('attendance/', views.attendance_overview, name='attendance_overview'),
 ] 
